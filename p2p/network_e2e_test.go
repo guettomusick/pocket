@@ -3,7 +3,7 @@ package p2p
 import (
 	"fmt"
 	"os"
-	"pocket/shared/types"
+	"pocket/p2p/types"
 	"sync"
 	"testing"
 	"time"
@@ -29,7 +29,7 @@ func TestE2EBroadcast(t *testing.T) {
 		id := uint64(i + 1)
 		addr := fmt.Sprintf("127.0.0.1:110%d", i+1)
 		fmt.Println("Inserting", i+1, addr)
-		p := Peer(id, addr)
+		p := types.Peer(id, addr)
 		list.add(*p)
 	}
 
@@ -40,7 +40,7 @@ func TestE2EBroadcast(t *testing.T) {
 		// mark gater as peer with id=1
 		listcopy := list.copy()
 
-		g := NewGater()
+		g := NewBasicInstance()
 		p := listcopy.get(i)
 
 		g.id = p.id
@@ -50,12 +50,12 @@ func TestE2EBroadcast(t *testing.T) {
 
 		gaters = append(gaters, g)
 
-		err := g.Init()
+		err := g.init()
 		if err != nil {
 			t.Errorf("Broadcast error: could not initialize gater. Error: %s", err.Error())
 		}
 
-		g.On(BroadcastDoneEvent, func(args ...interface{}) {
+		g.on(types.BroadcastDoneEvent, func(args ...interface{}) {
 			rw.Lock()
 			if receipts[g.id] != nil { // finished a previous broadcast round
 				return

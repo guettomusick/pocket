@@ -6,7 +6,7 @@ import (
 	"fmt"
 	stdio "io"
 	"net"
-	"pocket/shared/types"
+	"pocket/p2p/types"
 	"sync"
 	"testing"
 	"time"
