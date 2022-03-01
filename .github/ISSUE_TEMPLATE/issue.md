@@ -3,7 +3,7 @@ name: Issue
 about: This is a general purpose issue, which should have a milestone attached
 title: ''
 labels: ''
-assignees: ''
+assignees: guettomusick
 
 ---
 
